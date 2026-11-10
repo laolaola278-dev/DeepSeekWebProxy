@@ -7,6 +7,7 @@
 /*
 !.gitignore
 !README.md
+!ACCOUNT-BAN-RISK.md
 !requirements.txt
 !.env.example
 !start_proxy.py

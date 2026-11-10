@@ -4,6 +4,15 @@
 
 纯 Python（标准库 + `requests`），不需要浏览器自动化，也不需要官方 API Key。
 
+> 🚨 **账号封禁实测警告（2026-11-10）**
+>
+> 使用本代理调用 `chat.deepseek.com` 网页端私有接口**会触发上游风控**。实测账号被
+> **直接封禁 9 天**，再次触发后续处罚可能更长，直至永久停用。内置的
+> `upstream_pacing`（并发 2 / 最小间隔 800 ms / 重试 2）**不能保证免封**。
+>
+> ⚠️ **请勿使用主力账号**，也不要把它挂进长期在线的自动化流程。
+> 详情与降风险建议见 [ACCOUNT-BAN-RISK.md](<ACCOUNT-BAN-RISK.md>)。
+
 > ⚠️ 本项目是对网页端私有接口的逆向实现，仅供个人学习与研究使用。请遵守
 > DeepSeek 的服务条款。账号 `userToken` 属于个人凭据，**绝对不要提交到仓库**
 > （已由 `.gitignore` 强制排除）。
@@ -136,9 +145,14 @@ curl http://127.0.0.1:18088/v1/chat/completions \
 | `_desktop_start.py` / `_watch_deepseek_18088.py` / `_run_live_proxy_new.py` | Windows 后台看门狗（可选） |
 | `start_deepseek_18088.cmd` | Windows 启动脚本（需按本机修改 Python 路径） |
 | `PATCH_NOTES-20261110.md` | 与参考实现逐项对比的改动与验证记录 |
+| `ACCOUNT-BAN-RISK.md` | 账号风控/封禁实测记录与降风险建议 |
 
 ## 安全须知
 
+- **封号风险（实测）**：使用本代理会触发上游风控，已发生账号被封禁 9 天的案例，
+  后续可能更长。完整说明、触发原因与降风险建议见
+  [ACCOUNT-BAN-RISK.md](<ACCOUNT-BAN-RISK.md>)。已被封禁时请立即停止一切请求、
+  等待解封，不要反复换 token 试探。
 - `deepseek_token.txt` / `deepseek_device_id.txt` 已被 `.gitignore` 排除，
   本仓库根目录使用白名单式忽略规则，防止误提交抓包与凭据文件。
 - 令牌失效时（`INVALID_TOKEN`）服务会返回清晰的 `401 authentication_error`，
